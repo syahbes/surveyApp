@@ -16,37 +16,22 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text>Welcome to my survey app!</Text>
+      <Text style={styles.title}>Welcome to my survey app!</Text>
+<View style={{flexDirection:'row', gap:20}}>
 
       <Button onPress={() => navigation.navigate("Login")} mode="outlined">
-        go to Login
+        Login
       </Button>
-
-      <Text>User? Click to start</Text>
       <Button
         onPress={() => {
           navigation.navigate("Survey");
         }}
         mode="contained"
-      >
+        >
         Start
       </Button>
-      <View style={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center",
-        alignItems: "center",
-        marginTop: 20,
-        gap: 10
+        </View>
 
-      }}>
-
-      <FilledStar/>
-      <FilledStar/>
-      <FilledStar/>
-      <OutlinesStar/>
-      <OutlinesStar/>
-      </View>
     </View>
   );
 };
@@ -57,4 +42,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+  }
 });

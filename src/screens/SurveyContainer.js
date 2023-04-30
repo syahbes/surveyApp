@@ -13,7 +13,6 @@ const SurveyContainer = () => {
   const handleFinish = () => {
     // Handle the end of the survey
   };
-  console.log(questions)
   return (
     <Survey
       questions={questions}

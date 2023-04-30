@@ -35,7 +35,7 @@ const Main = () => {
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Home">
             <Stack.Screen name="Home" component={Home} options={{headerShown: false}}/>
-            <Stack.Screen name="Login" component={Login} options={{headerShown: false}}/>
+            <Stack.Screen name="Login" component={Login} options={{headerShown: true}}/>
             <Stack.Screen name="Survey" component={SurveyContainer} options={{headerShown: false}}/>
           </Stack.Navigator>
         </NavigationContainer>

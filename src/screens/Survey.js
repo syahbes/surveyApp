@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import OutlinesStar from '../icons/OutlinesStar';
 import FilledStar from '../icons/FilledStar';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Button } from "react-native-paper";
+
 
 function Survey({ questions }) {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -28,6 +30,7 @@ function Survey({ questions }) {
   };
 
   const currentQuestion = questions[currentQuestionIndex];
+  const hasRating = answers.find(a => a.id === currentQuestion?.id)?.rating !== 0;
 
   return (
     <View style={styles.container}>
@@ -35,10 +38,10 @@ function Survey({ questions }) {
         <Text style={styles.text}>{currentQuestion?.text}</Text>
         <RatingInput id={currentQuestion.id} rating={answers.find(a => a.id === currentQuestion.id).rating} onRatingChange={handleRatingChange} />
       </View>
-      <View>
-        <button onClick={handlePrevQuestion}>Previous</button>
-        {currentQuestionIndex < questions.length - 1 && <button onClick={handleNextQuestion}>Next</button>}
-        {currentQuestionIndex === questions.length - 1 && <button onClick={handleSubmit}>Submit</button>}
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Button onPress={handlePrevQuestion} disabled={currentQuestionIndex === 0}>Previous</Button>
+        {currentQuestionIndex < questions.length - 1 && <Button onPress={handleNextQuestion} mode='contained' disabled={!hasRating}>Next</Button>}
+        {currentQuestionIndex === questions.length - 1 && <Button onPress={handleSubmit} mode='contained' buttonColor='#4caf50' disabled={!hasRating}>Submit</Button>}
       </View>
     </View>
   );
@@ -64,6 +67,8 @@ export default Survey;
 
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
+    paddingHorizontal: 20,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
@@ -71,6 +76,9 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
+    marginBottom: 20,
+    textAlign: 'center',
+
   },
   starsStack: {
     display: "flex",
