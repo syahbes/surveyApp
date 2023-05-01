@@ -1,3 +1,14 @@
+//todo
+handle submit / onfinish
+admin screen :
+
+1. add / edit question
+2. see stats (bar chart and pie)
+
+
+https://gifted-charts.web.app/
+
+
 מה היה לנו
 כל מיני חבילות
 רידוקס
