@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import OutlinesStar from '../icons/OutlinesStar';
 import FilledStar from '../icons/FilledStar';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Button } from "react-native-paper";
+import { Button, shadow } from "react-native-paper";
 
 
 function Survey({ questions }) {
@@ -85,11 +85,13 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 1,
     borderRadius: 20,
-    padding: 20
+    padding: 20,
+    elevation: 5,
+
   },
   text: {
     fontSize: 20,
-    marginBottom: 20,
+    marginBottom: 50,
     fontWeight: 'bold',
     textAlign: 'center',
 
@@ -100,6 +102,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     gap: 10,
-    marginBottom: 20,
+    marginBottom: 60,
   }
 })
