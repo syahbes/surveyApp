@@ -34,16 +34,18 @@ function Survey({ questions }) {
 
   return (
     <View style={styles.container}>
-      <View>
-        <Text style={styles.text}>{currentQuestion?.text}</Text>
-        <RatingInput id={currentQuestion.id} rating={answers.find(a => a.id === currentQuestion.id).rating} onRatingChange={handleRatingChange} />
+    <View style={styles.contectContainer}>
+        <View>
+          <Text style={styles.text}>{currentQuestion?.text}</Text>
+          <RatingInput id={currentQuestion.id} rating={answers.find(a => a.id === currentQuestion.id).rating} onRatingChange={handleRatingChange} />
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'white' }}>
+          <Button onPress={handlePrevQuestion} disabled={currentQuestionIndex === 0}>Previous</Button>
+          {currentQuestionIndex < questions.length - 1 && <Button onPress={handleNextQuestion} mode='contained' disabled={!hasRating}>Next</Button>}
+          {currentQuestionIndex === questions.length - 1 && <Button onPress={handleSubmit} mode='contained' buttonColor='#4caf50' disabled={!hasRating}>Submit</Button>}
+        </View>
       </View>
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Button onPress={handlePrevQuestion} disabled={currentQuestionIndex === 0}>Previous</Button>
-        {currentQuestionIndex < questions.length - 1 && <Button onPress={handleNextQuestion} mode='contained' disabled={!hasRating}>Next</Button>}
-        {currentQuestionIndex === questions.length - 1 && <Button onPress={handleSubmit} mode='contained' buttonColor='#4caf50' disabled={!hasRating}>Submit</Button>}
       </View>
-    </View>
   );
 }
 
@@ -67,16 +69,28 @@ export default Survey;
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    paddingHorizontal: 20,
     flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    paddingHorizontal: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  contectContainer: {
+    display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+    backgroundColor: 'white',
+    borderColor: 'black',
+    borderWidth: 1,
+    borderRadius: 20,
+    padding: 20
   },
   text: {
     fontSize: 20,
     marginBottom: 20,
+    fontWeight: 'bold',
     textAlign: 'center',
 
   },
