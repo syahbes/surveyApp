@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
 import OutlinesStar from '../icons/OutlinesStar';
 import FilledStar from '../icons/FilledStar';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { Button, shadow } from "react-native-paper";
+import { StyleSheet, Text, TouchableOpacity, View, TouchableNativeFeedback, Pressable } from 'react-native';
+import { Button } from "react-native-paper";
+import { useNavigation } from '@react-navigation/native';
+import { upDateRating } from '../features/questionsSlice';
+import { useDispatch } from 'react-redux';
 
+;
 
 function Survey({ questions }) {
+  const navigation = useNavigation();
+  const dispatch = useDispatch();
+
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState(questions.map(q => ({ id: q.id, rating: 0 })));
 
@@ -16,6 +23,9 @@ function Survey({ questions }) {
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
+      const updateId = questions[currentQuestionIndex].id;
+      const newRating = answers.find(a => a.id === updateId).rating;
+      dispatch(upDateRating({ updateId, newRating }));
     }
   };
 
@@ -26,7 +36,10 @@ function Survey({ questions }) {
   };
 
   const handleSubmit = () => {
-    console.log(answers); // or send to backend, etc.
+    const updateId = questions[currentQuestionIndex].id;
+    const newRating = answers.find(a => a.id === updateId).rating;
+    dispatch(upDateRating({ updateId, newRating }));
+    navigation.navigate("ThankYou");
   };
 
   const currentQuestion = questions[currentQuestionIndex];
@@ -34,7 +47,7 @@ function Survey({ questions }) {
 
   return (
     <View style={styles.container}>
-    <View style={styles.contectContainer}>
+      <View style={styles.contectContainer}>
         <View>
           <Text style={styles.text}>{currentQuestion?.text}</Text>
           <RatingInput id={currentQuestion.id} rating={answers.find(a => a.id === currentQuestion.id).rating} onRatingChange={handleRatingChange} />
@@ -42,10 +55,10 @@ function Survey({ questions }) {
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'white' }}>
           <Button onPress={handlePrevQuestion} disabled={currentQuestionIndex === 0}>Previous</Button>
           {currentQuestionIndex < questions.length - 1 && <Button onPress={handleNextQuestion} mode='contained' disabled={!hasRating}>Next</Button>}
-          {currentQuestionIndex === questions.length - 1 && <Button onPress={handleSubmit} mode='contained' buttonColor='#4caf50' disabled={!hasRating}>Submit</Button>}
+          {currentQuestionIndex === questions.length - 1 && <Button onPress={handleSubmit} mode='contained' buttonColor='#4caf50' disabled={!hasRating}>Finish</Button>}
         </View>
       </View>
-      </View>
+    </View>
   );
 }
 
@@ -57,9 +70,9 @@ function RatingInput({ id, rating, onRatingChange }) {
   return (
     <View style={styles.starsStack}>
       {[1, 2, 3, 4, 5].map(n => (
-        <TouchableOpacity key={n} onPress={() => handleRatingClick(n)}>
+        <Pressable key={n} onPress={() => handleRatingClick(n)}>
           {n <= rating ? <FilledStar /> : <OutlinesStar />}
-        </TouchableOpacity>
+        </Pressable>
       ))}
     </View>
   );
@@ -86,7 +99,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20,
     padding: 20,
-    elevation: 5,
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.36,
+    shadowRadius: 6.68,
+
+    elevation: 11,
 
   },
   text: {
