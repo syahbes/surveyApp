@@ -1,27 +1,57 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { updateDoc, doc, collection, getDocs, increment } from "firebase/firestore";
-
-import { db } from "../app/firebase";
-
+// import { updateDoc, doc, collection, getDocs, increment } from "firebase/firestore";
+// import { db } from "../app/firebase";
 // import { auth } from "../app/firebase";
+import { firebase } from "../app/firebase";
 
-export const getQuestions = createAsyncThunk("getQuestion", async () => {
-    const questionsRef = collection(db, "questions");
-    const querySnapshot = await getDocs(questionsRef);
-    const questionsArr = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-    }))
-    return questionsArr
+
+// export const getQuestions = createAsyncThunk("getQuestions", async () => {
+//     const questionRef = firebase.firestore().collection('questions');
+//     questionRef.onSnapshot((querySnapshot) => {
+//         const questionArr = [];
+//         querySnapshot.forEach((doc) => {
+//             questionArr.push({
+//                 id: doc.id,
+//                 ...doc.data(),
+//             });
+//         });
+//         console.log(questionArr)
+//         return questionArr
+//     })
+// })
+
+export const getQuestions = createAsyncThunk("getQuestions", async () => {
+    return new Promise((resolve, reject) => {
+        const questionRef = firebase.firestore().collection('questions');
+        questionRef.onSnapshot((querySnapshot) => {
+            const questionArr = [];
+            querySnapshot.forEach((doc) => {
+                questionArr.push({
+                    id: doc.id,
+                    ...doc.data(),
+                });
+            });
+            // console.log(questionArr)
+            resolve(questionArr);
+        }, reject);
+    });
 })
 
 export const upDateRating = createAsyncThunk("upDateRating", async ({ updateId, newRating }) => {
-    const questionRef = doc(db, "questions", updateId);
-    await updateDoc(questionRef, {
-        [newRating] : increment(1)
+    const questionRef = firebase.firestore().collection('questions').doc(updateId)
+
+    // Atomically increment the population of the city by 50.
+    questionRef.update({
+        [newRating]: firebase.firestore.FieldValue.increment(1)
     });
+
+
+    // const questionRef = doc(db, "questions", updateId);
+    // await updateDoc(questionRef, {
+    //     [newRating]: increment(1)
+    // });
 })
 
 const initialState = {

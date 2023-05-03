@@ -26,9 +26,9 @@ const Home = ({ navigation }) => {
             navigation.navigate("Survey");
           }}
           mode="contained"
-          loading={!questions.length > 0}
+          loading={!questions?.length > 0}
         >
-          {questions.length > 0 ? "Start" : "Loading"}
+          {questions?.length > 0 ? "Start" : "Loading"}
         </Button>
       </View>
 

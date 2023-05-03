@@ -6,16 +6,11 @@ import { StyleSheet, Text, View } from "react-native";
 import { Button, TextInput } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { emailSignIn } from "../features/userSlice";
-import { fbSignOut } from "../app/firebase";
 
 const Login = () => {
   const dispatch = useDispatch();
   const handleLogin = () => {
     dispatch(emailSignIn({ email, password }));
-  };
-
-  const handleLogout = () => {
-    fbSignOut();
   };
 
   const [email, setEmail] = useState("");

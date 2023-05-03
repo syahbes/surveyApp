@@ -1,10 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native'
-import { fbSignOut } from '../app/firebase';
+import { firebase } from '../app/firebase';
 import { Button } from 'react-native-paper';
 const Admin = () => {
-    const handleLogout = () => {
-        fbSignOut();
-    };
+    const handleLogout = () =>{
+        firebase.auth().signOut().then(() => {
+        console.log("Sign-out successful.")
+      }).catch((error) => {
+        console.log(error)
+      });
+      }
 
     return (
         <View>
