@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectUser, setUser } from './src/features/userSlice';
 import SurveyContainer from './src/screens/SurveyContainer';
 import Admin from './src/screens/Admin';
+import ThankYou from './src/screens/ThankYou';
 
 
 const Stack = createNativeStackNavigator();
@@ -44,6 +45,7 @@ const Main = () => {
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
             <Stack.Screen name="Login" component={Login} options={{ headerShown: true }} />
             <Stack.Screen name="Survey" component={SurveyContainer} options={{ headerShown: false }} />
+            <Stack.Screen name="ThankYou" component={ThankYou} options={{ headerShown: false }} />
           </>
         )}
 

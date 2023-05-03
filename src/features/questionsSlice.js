@@ -1,28 +1,28 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import { collection, getDocs } from "firebase/firestore";
+import { updateDoc, doc, collection, getDocs, increment } from "firebase/firestore";
+
 import { db } from "../app/firebase";
 
 // import { auth } from "../app/firebase";
 
 export const getQuestions = createAsyncThunk("getQuestion", async () => {
-
     const questionsRef = collection(db, "questions");
     const querySnapshot = await getDocs(questionsRef);
     const questionsArr = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-        // return doc.data();
     }))
-    // console.log("🚀 ~ file: questionsSlice.js:16 ~ questionsArr ~ questionsArr:", questionsArr)
     return questionsArr
-    // querySnapshot.forEach((doc) => {
-    //     console.log(doc.id)
-    // })
-    // return querySnapshot.JSON;
 })
 
+export const upDateRating = createAsyncThunk("upDateRating", async ({ updateId, newRating }) => {
+    const questionRef = doc(db, "questions", updateId);
+    await updateDoc(questionRef, {
+        [newRating] : increment(1)
+    });
+})
 
 const initialState = {
     isLoading: false,
