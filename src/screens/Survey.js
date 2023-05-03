@@ -7,8 +7,6 @@ import { useNavigation } from '@react-navigation/native';
 import { upDateRating } from '../features/questionsSlice';
 import { useDispatch } from 'react-redux';
 
-;
-
 function Survey({ questions }) {
   const navigation = useNavigation();
   const dispatch = useDispatch();
@@ -22,10 +20,12 @@ function Survey({ questions }) {
 
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
       const updateId = questions[currentQuestionIndex].id;
       const newRating = answers.find(a => a.id === updateId).rating;
       dispatch(upDateRating({ updateId, newRating }));
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+    } else {
+      handleFinish();
     }
   };
 
@@ -35,7 +35,7 @@ function Survey({ questions }) {
     }
   };
 
-  const handleSubmit = () => {
+  const handleFinish = () => {
     const updateId = questions[currentQuestionIndex].id;
     const newRating = answers.find(a => a.id === updateId).rating;
     dispatch(upDateRating({ updateId, newRating }));
@@ -44,6 +44,14 @@ function Survey({ questions }) {
 
   const currentQuestion = questions[currentQuestionIndex];
   const hasRating = answers.find(a => a.id === currentQuestion?.id)?.rating !== 0;
+
+  const buttonProps = {
+    disabled: !hasRating,
+    mode: currentQuestionIndex < questions.length - 1 ? 'contained' : 'contained',
+    onPress: currentQuestionIndex < questions.length - 1 ? handleNextQuestion : handleFinish,
+    children: currentQuestionIndex < questions.length - 1 ? 'Next' : 'Finish',
+    buttonColor: currentQuestionIndex < questions.length - 1 ? undefined : '#4caf50'
+  };
 
   return (
     <View style={styles.container}>
@@ -54,8 +62,7 @@ function Survey({ questions }) {
         </View>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'white' }}>
           <Button onPress={handlePrevQuestion} disabled={currentQuestionIndex === 0}>Previous</Button>
-          {currentQuestionIndex < questions.length - 1 && <Button onPress={handleNextQuestion} mode='contained' disabled={!hasRating}>Next</Button>}
-          {currentQuestionIndex === questions.length - 1 && <Button onPress={handleSubmit} mode='contained' buttonColor='#4caf50' disabled={!hasRating}>Finish</Button>}
+          <Button {...buttonProps} />
         </View>
       </View>
     </View>
@@ -79,7 +86,6 @@ function RatingInput({ id, rating, onRatingChange }) {
 }
 
 export default Survey;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
