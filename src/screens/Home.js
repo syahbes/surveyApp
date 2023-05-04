@@ -4,15 +4,12 @@ import { Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuestions, selectQuestions } from "../features/questionsSlice";
 
-
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
   const questions = useSelector(selectQuestions);
-
   useEffect(() => {
     dispatch(getQuestions());
   }, []);
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to surveyApp!</Text>
@@ -31,7 +28,6 @@ const Home = ({ navigation }) => {
           {questions?.length > 0 ? "Start" : "Loading"}
         </Button>
       </View>
-
     </View>
   );
 };

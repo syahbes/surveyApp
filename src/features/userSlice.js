@@ -1,33 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { firebase } from "../app/firebase"
-// import { auth } from "../app/firebase";
-// import { signInWithEmailAndPassword } from "firebase/auth";
 
 export const emailSignIn = createAsyncThunk("user/login", async ({ email, password }) => {
-  firebase.auth().signInWithEmailAndPassword(email,password)
-    .then((userCredential) => {
-      // Signed in
-      var user = userCredential.user;
-      return user.JSON
-      // ...
-    })
-    .catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorMessage)
-    });
-
-
-
-  // const response = await signInWithEmailAndPassword(auth, email, password)
-  // return response.JSON
+  try {
+    const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+    return userCredential.user.toJSON();
+  } catch (error) {
+    console.log(error.message);
+    throw error;
+  }
 })
 
 const initialState = {
   uid: "",
   email: "",
-  isLoading: false,
+  isLoading: true,
   isError: false,
   error: "",
 };
@@ -37,21 +25,24 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUser: (state, action) => {
-      state.uid = action.payload?.uid;
-      state.email = action.payload?.email;
+      const { uid, email } = action.payload || {};
+      state.uid = uid;
+      state.email = email;
+      state.isLoading = false;
     },
     logout: (state) => {
       state.uid = "";
       state.email = "";
+      state.isLoading = false;
     },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload
+    }
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(emailSignIn.pending, (state) => {
+      .addCase(emailSignIn.pending, state => {
         state.isLoading = true;
-      })
-      .addCase(emailSignIn.fulfilled, (state, action) => {
-        state.isLoading = false;
       })
       .addCase(emailSignIn.rejected, (state, action) => {
         state.isLoading = false;
@@ -61,10 +52,8 @@ export const userSlice = createSlice({
   }
 });
 
-// Action creators are generated for each case reducer function
-export const { setUser, logout } = userSlice.actions;
-
-// export const selectEmail = (state) => state.user.email
-export const selectUser = (state) => state.user;
+export const { setUser, logout , setLoading } = userSlice.actions;
+export const selectUser = state => state.user;
+export const selectIsLoading = state => state.user.isLoading;
 
 export default userSlice.reducer;

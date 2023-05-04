@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import OutlinesStar from '../icons/OutlinesStar';
 import FilledStar from '../icons/FilledStar';
-import { StyleSheet, Text, TouchableOpacity, View, TouchableNativeFeedback, Pressable } from 'react-native';
-import { Button } from "react-native-paper";
+import { StyleSheet, Text, View,  } from 'react-native';
+import { Button, TouchableRipple } from "react-native-paper";
 import { useNavigation } from '@react-navigation/native';
-import { upDateRating } from '../features/questionsSlice';
-import { useDispatch } from 'react-redux';
+import { selectQuestions, upDateRating } from '../features/questionsSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
-function Survey({ questions }) {
+function Survey() {
+  const questions = useSelector(selectQuestions);
+
   const navigation = useNavigation();
   const dispatch = useDispatch();
 
@@ -47,9 +49,10 @@ function Survey({ questions }) {
 
   const buttonProps = {
     disabled: !hasRating,
-    mode: currentQuestionIndex < questions.length - 1 ? 'contained' : 'contained',
+    // mode: currentQuestionIndex < questions.length - 1 ? 'contained' : 'contained',
+    mode: 'contained',
     onPress: currentQuestionIndex < questions.length - 1 ? handleNextQuestion : handleFinish,
-    children: currentQuestionIndex < questions.length - 1 ? 'Next' : 'Finish',
+    children: currentQuestionIndex < questions.length - 1 ? 'Next' : 'Done',
     buttonColor: currentQuestionIndex < questions.length - 1 ? undefined : '#4caf50'
   };
 
@@ -77,11 +80,10 @@ function RatingInput({ id, rating, onRatingChange }) {
   return (
     <View style={styles.starsStack}>
       {[1, 2, 3, 4, 5].map(n => (
-        <Pressable key={n} onPress={() => handleRatingClick(n)}
-        style={{ marginRight: 10 }}
-        >
+        <TouchableRipple key={n}
+          onPress={() => handleRatingClick(n)} style={{ borderRadius: 50, padding: 8 }} rippleColor='rgba(255, 206, 41, 0.2)'>
           {n <= rating ? <FilledStar /> : <OutlinesStar />}
-        </Pressable>
+        </TouchableRipple>
       ))}
     </View>
   );
@@ -107,7 +109,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20,
     padding: 20,
-
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -115,7 +116,6 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.36,
     shadowRadius: 6.68,
-
     elevation: 11,
 
   },

@@ -1,9 +1,18 @@
 //todo
+wheun question is empty ?
 handle submit / onfinish
 admin screen :
 
 1. add / edit question
 2. see stats (bar chart and pie)
+
+gap
+github
+safe earea
+
+icons:
+chart-pie
+chart-bar
 
 
 https://gifted-charts.web.app/
