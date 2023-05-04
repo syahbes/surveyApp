@@ -77,7 +77,9 @@ function RatingInput({ id, rating, onRatingChange }) {
   return (
     <View style={styles.starsStack}>
       {[1, 2, 3, 4, 5].map(n => (
-        <Pressable key={n} onPress={() => handleRatingClick(n)}>
+        <Pressable key={n} onPress={() => handleRatingClick(n)}
+        style={{ marginRight: 10 }}
+        >
           {n <= rating ? <FilledStar /> : <OutlinesStar />}
         </Pressable>
       ))}
@@ -129,7 +131,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    gap: 10,
+    // gap: 10,
     marginBottom: 60,
   }
 })

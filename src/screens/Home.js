@@ -16,9 +16,9 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to surveyApp!</Text>
-      <View style={{ flexDirection: 'row', gap: 20 }}>
-
-        <Button onPress={() => navigation.navigate("Login")} mode="outlined">
+      <View style={{ flexDirection: 'row' }}>
+        <Button onPress={() => navigation.navigate("Login")} mode="outlined" style={{ marginRight: 20 }}
+        >
           Login
         </Button>
         <Button
