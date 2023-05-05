@@ -14,6 +14,7 @@ icons:
 chart-pie
 chart-bar
 
+https://github.com/JesperLekland/react-native-svg-charts-examples/blob/master/storybook/stories/bar-chart/horizontal-with-labels.js
 
 https://gifted-charts.web.app/
 
