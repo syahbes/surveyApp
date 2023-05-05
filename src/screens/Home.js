@@ -4,21 +4,18 @@ import { Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuestions, selectQuestions } from "../features/questionsSlice";
 
-
 const Home = ({ navigation }) => {
   const dispatch = useDispatch();
   const questions = useSelector(selectQuestions);
-
   useEffect(() => {
     dispatch(getQuestions());
   }, []);
-
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to surveyApp!</Text>
-      <View style={{ flexDirection: 'row', gap: 20 }}>
-
-        <Button onPress={() => navigation.navigate("Login")} mode="outlined">
+      <View style={{ flexDirection: 'row' }}>
+        <Button onPress={() => navigation.navigate("Login")} mode="outlined" style={{ marginRight: 20 }}
+        >
           Login
         </Button>
         <Button
@@ -26,12 +23,11 @@ const Home = ({ navigation }) => {
             navigation.navigate("Survey");
           }}
           mode="contained"
-          loading={!questions.length > 0}
+          loading={!questions?.length > 0}
         >
-          {questions.length > 0 ? "Start" : "Loading"}
+          {questions?.length > 0 ? "Start" : "Loading"}
         </Button>
       </View>
-
     </View>
   );
 };

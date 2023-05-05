@@ -1,4 +1,4 @@
-import { Image, View } from "react-native";
+import { Image } from "react-native";
 const FilledStar = () => {
     return (
         <Image source={require("../../assets/filledStar.png")} style={{ width: 48, height: 48 }} />

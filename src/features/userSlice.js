@@ -11,7 +11,7 @@ export const emailSignIn = createAsyncThunk("user/login", async ({ email, passwo
 const initialState = {
   uid: "",
   email: "",
-  isLoading: false,
+  isLoading: true,
   isError: false,
   error: "",
 };
@@ -23,19 +23,21 @@ export const userSlice = createSlice({
     setUser: (state, action) => {
       state.uid = action.payload?.uid;
       state.email = action.payload?.email;
+      state.isLoading = false;
     },
     logout: (state) => {
       state.uid = "";
       state.email = "";
+      state.isLoading = false;
     },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder
       .addCase(emailSignIn.pending, (state) => {
         state.isLoading = true;
-      })
-      .addCase(emailSignIn.fulfilled, (state, action) => {
-        state.isLoading = false;
       })
       .addCase(emailSignIn.rejected, (state, action) => {
         state.isLoading = false;
@@ -44,11 +46,7 @@ export const userSlice = createSlice({
       })
   }
 });
-
-// Action creators are generated for each case reducer function
-export const { setUser, logout } = userSlice.actions;
-
-// export const selectEmail = (state) => state.user.email
+export const { setUser, logout, setLoading } = userSlice.actions;
 export const selectUser = (state) => state.user;
-
+export const selectIsLoading = (state) => state.user.isLoading;
 export default userSlice.reducer;

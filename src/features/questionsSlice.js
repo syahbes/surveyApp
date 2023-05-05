@@ -1,11 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-
 import { updateDoc, doc, collection, getDocs, increment } from "firebase/firestore";
-
 import { db } from "../app/firebase";
-
-// import { auth } from "../app/firebase";
 
 export const getQuestions = createAsyncThunk("getQuestion", async () => {
     const questionsRef = collection(db, "questions");
@@ -54,10 +50,5 @@ export const questionsSlice = createSlice({
     }
 });
 
-// Action creators are generated for each case reducer function
-// export const { setUser, logout } = userSlice.actions;
-
-// export const selectEmail = (state) => state.user.email
 export const selectQuestions = (state) => state.questions.data;
-
 export default questionsSlice.reducer;

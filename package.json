@@ -11,6 +11,7 @@
   "dependencies": {
     "@expo/config-plugins": "^6.0.1",
     "@expo/webpack-config": "^18.0.1",
+    "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native-stack": "^6.9.12",
     "@reduxjs/toolkit": "^1.9.5",
     "expo": "~48.0.15",
