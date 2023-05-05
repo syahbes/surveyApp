@@ -81,7 +81,9 @@ function RatingInput({ id, rating, onRatingChange }) {
     <View style={styles.starsStack}>
       {[1, 2, 3, 4, 5].map(n => (
         <TouchableRipple key={n}
-          onPress={() => handleRatingClick(n)} style={{ borderRadius: 50, padding: 8 }} rippleColor='rgba(255, 206, 41, 0.2)'>
+          onPress={() => handleRatingClick(n)} style={{ borderRadius: 50, padding: 8 }} rippleColor='rgba(255, 206, 41, 0.2)'
+          borderless={true}
+          >
           {n <= rating ? <FilledStar /> : <OutlinesStar />}
         </TouchableRipple>
       ))}
