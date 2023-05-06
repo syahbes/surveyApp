@@ -9,10 +9,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function Survey() {
   const questions = useSelector(selectQuestions);
-
   const navigation = useNavigation();
   const dispatch = useDispatch();
-
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState(questions.map(q => ({ id: q.id, rating: 0 })));
 

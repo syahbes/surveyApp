@@ -1,12 +1,11 @@
 //todo
 handle submit / onfinish
 admin screen :
+- add new question
+- delete question
 
-1. add / edit question
-2. see stats (bar chart and pie)
+.ENV !!!!
 
-
-https://gifted-charts.web.app/
 
 
 מה היה לנו

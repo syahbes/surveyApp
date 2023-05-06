@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Button } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuestions, selectQuestions } from "../features/questionsSlice";
@@ -13,20 +13,19 @@ const Home = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to surveyApp!</Text>
-      <View style={{ flexDirection: 'row' }}>
-        <Button onPress={() => navigation.navigate("Login")} mode="outlined" style={{ marginRight: 20 }}
-        >
-          Login
-        </Button>
+      <View style={{ flexDirection: 'column' }}>
         <Button
-          onPress={() => {
-            navigation.navigate("Survey");
-          }}
+          onPress={() => { navigation.navigate("Survey") }}
           mode="contained"
           loading={!questions?.length > 0}
         >
           {questions?.length > 0 ? "Start" : "Loading"}
         </Button>
+      </View>
+      <View style={styles.footer}>
+        <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+          <Text>Login</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -41,5 +40,15 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     marginBottom: 20,
+  },
+  footer: {
+    position: 'absolute',
+    bottom: 0,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#c3c3c3',
+    padding: 3
   }
 });

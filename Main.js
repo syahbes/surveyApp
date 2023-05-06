@@ -1,21 +1,18 @@
+import { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Home from './src/screens/Home';
-import Login from './src/screens/Login';
-import { useEffect, memo } from 'react';
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from './src/app/firebase';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, selectIsLoading, selectUser, setUser } from './src/features/userSlice';
-import Admin from './src/screens/Admin';
-import ThankYou from './src/screens/ThankYou';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from './src/app/firebase';
 import Loading from './src/screens/Loading';
+import Home from './src/screens/Home';
+import Login from './src/screens/Login';
+import Admin from './src/screens/Admin';
 import Survey from './src/screens/Survey';
+import ThankYou from './src/screens/ThankYou';
 
 const Stack = createNativeStackNavigator();
-
-const MemoizedLoading = memo(Loading);
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -34,8 +31,7 @@ const Main = () => {
     return unsubscribe;
   }, []);
 
-
-  return isLoading ? <MemoizedLoading /> : (
+  return isLoading ? <Loading /> : (
     <NavigationContainer>
       <Stack.Navigator>
         {user.uid ? (
@@ -43,16 +39,13 @@ const Main = () => {
         ) : (
           <>
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-            <Stack.Screen name="Login" component={Login} options={{ headerShown: true }} />
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
             <Stack.Screen name="Survey" component={Survey} options={{ headerShown: false }} />
             <Stack.Screen name="ThankYou" component={ThankYou} options={{ headerShown: false }} />
           </>
         )}
-
       </Stack.Navigator>
     </NavigationContainer>
   )
-
 }
-
 export default Main;

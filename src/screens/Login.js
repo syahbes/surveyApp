@@ -1,8 +1,5 @@
 import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-
-// import { signInWithEmailAndPassword } from "firebase/auth";
-
 import { Button, TextInput } from "react-native-paper";
 import { useDispatch } from "react-redux";
 import { emailSignIn } from "../features/userSlice";
@@ -12,7 +9,6 @@ const Login = () => {
   const handleLogin = () => {
     dispatch(emailSignIn({ email, password }));
   };
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -31,18 +27,12 @@ const Login = () => {
           secureTextEntry={true}
           onChangeText={(text) => setPassword(text)}
           style={{ marginBottom: 20 }}
-
-/>
-        <Button onPress={handleLogin} mode="contained"
-          style={{ marginBottom: 20 }}
-          >
+        />
+        <Button icon={'login'} onPress={handleLogin} mode="contained" style={{ marginBottom: 20 }} >
           Login
         </Button>
         <Text>Considering that this is a demo application</Text>
-        <Text
-          style={{ marginBottom: 20 }}
-
-         >Please use these details to log in</Text>
+        <Text style={{ marginBottom: 20 }}>Please use these details to log in</Text>
         <Text>Email: shlomi@shlomi.com</Text>
         <Text>Password: 1q2w3e</Text>
       </View>
@@ -57,8 +47,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   inputContainer: {
-    // height: 40,
     width: 300,
-    // need to be sure its supported by react-native on android and IOS
   },
 });

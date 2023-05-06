@@ -3,7 +3,7 @@ const ThankYou = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Thank You for the feedback</Text>
-      <Text style={styles.text}>✨⭐❤️⭐✨</Text>
+      <Text style={styles.text}>✨⭐❤️</Text>
     </View>
   )
 }
