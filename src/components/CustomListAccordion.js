@@ -14,16 +14,11 @@ const CustomListAccordion = React.memo(({ item }) => {
         setExpanded(prevExpanded => !prevExpanded);
     }, []);
 
-
-
     const handleDelete = () => {
-        console.log("first")
         dispatch(deleteQuestion(item.id)).then(() => {
             setModalVisible(false)
         })
     }
-
-
     return (
         <View>
             <View style={styles.centeredView}>
@@ -34,7 +29,7 @@ const CustomListAccordion = React.memo(({ item }) => {
                     onRequestClose={() => {
                         setModalVisible(false);
                     }}>
-                    <View style={styles.centeredView}>
+                    <View style={styles.modalCenteredView}>
                         <View style={styles.modalView}>
                             <IconButton icon="alert" size={50} iconColor='#f4c008' />
                             <Text style={styles.modalText}>Are you sure you want to delete this question?</Text>
@@ -54,6 +49,12 @@ const CustomListAccordion = React.memo(({ item }) => {
                 onPress={handlePress}>
                 <List.Item
                     title={<RatingStats data={item} />}
+                    style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        flexDirection: 'row',
+                        padding: 0,
+                    }}
                 />
                 <List.Item
                     title="Delete"
@@ -70,7 +71,14 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 22,
+        marginTop: 10,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    modalCenteredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
     },
     modalView: {
         margin: 20,
