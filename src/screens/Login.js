@@ -33,7 +33,7 @@ const Login = () => {
           style={{ marginBottom: 20 }}
 
 />
-        <Button onPress={handleLogin} mode="contained"
+        <Button icon={'login'} onPress={handleLogin} mode="contained"
           style={{ marginBottom: 20 }}
           >
           Login

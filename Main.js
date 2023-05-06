@@ -12,6 +12,7 @@ import Admin from './src/screens/Admin';
 import ThankYou from './src/screens/ThankYou';
 import Loading from './src/screens/Loading';
 import Survey from './src/screens/Survey';
+import AdminEdit from './src/screens/adminStack/AdminEdit';
 
 const Stack = createNativeStackNavigator();
 
@@ -43,7 +44,7 @@ const Main = () => {
         ) : (
           <>
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-            <Stack.Screen name="Login" component={Login} options={{ headerShown: true }} />
+            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
             <Stack.Screen name="Survey" component={Survey} options={{ headerShown: false }} />
             <Stack.Screen name="ThankYou" component={ThankYou} options={{ headerShown: false }} />
           </>
