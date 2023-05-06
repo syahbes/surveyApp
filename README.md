@@ -31,3 +31,24 @@ Render Props: This pattern involves passing a function as a prop to a component,
 Context API: The Context API is a way to share data between components without passing props down through the component tree. This pattern is useful for sharing global data such as user settings or theme data.
 5.
 Redux: Redux is a state management library that provides a global store for your application state. It is useful for managing complex state and for sharing data between components.
+
+
+diffrent approach - update in batch
+
+import { batch, updateDoc, doc, collection } from "firebase/firestore";
+import { db } from "../app/firebase";
+
+export const updateCollection = async (newData) => {
+  const questionsRef = collection(db, "questions");
+  const querySnapshot = await getDocs(questionsRef);
+
+  const batchUpdate = batch(db);
+
+  querySnapshot.forEach((doc) => {
+    const questionRef = doc(db, "questions", doc.id);
+    const newRating = newData[doc.id];
+    batchUpdate.update(questionRef, { [newRating]: increment(1) });
+  });
+
+  await batchUpdate.commit();
+};
