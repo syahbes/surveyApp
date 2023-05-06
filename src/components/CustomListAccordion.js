@@ -2,8 +2,11 @@ import React, { useState, useCallback } from 'react';
 import { Modal, StyleSheet, Text, View } from 'react-native';
 import { Button, IconButton, List } from 'react-native-paper';
 import RatingStats from './RatingStats';
+import { useDispatch } from 'react-redux';
+import { deleteQuestion } from '../features/questionsSlice';
 
 const CustomListAccordion = React.memo(({ item }) => {
+    const dispatch = useDispatch();
     const [modalVisible, setModalVisible] = useState(false);
     const [expanded, setExpanded] = useState(false);
 
@@ -11,11 +14,15 @@ const CustomListAccordion = React.memo(({ item }) => {
         setExpanded(prevExpanded => !prevExpanded);
     }, []);
 
-    const handleDelete = useCallback(() => {
-        console.log("firebase delete");
-        console.log(item.id);
-        setModalVisible(false);
-    }, [item.id]);
+
+
+    const handleDelete = () => {
+        console.log("first")
+        dispatch(deleteQuestion(item.id)).then(() => {
+            setModalVisible(false)
+        })
+    }
+
 
     return (
         <View>
@@ -29,7 +36,7 @@ const CustomListAccordion = React.memo(({ item }) => {
                     }}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <IconButton icon="alert" size={50} iconColor='#f4c008'/>
+                            <IconButton icon="alert" size={50} iconColor='#f4c008' />
                             <Text style={styles.modalText}>Are you sure you want to delete this question?</Text>
                             <Text style={styles.modalSubText}>This action is irreversible</Text>
                             <View style={{ flexDirection: 'row' }}>
