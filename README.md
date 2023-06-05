@@ -1,53 +1,33 @@
-//todo
-handle submit / onfinish
-admin screen :
-- add new question
-- delete question
+# Survey Application
+Survey Application is a web application built using React Native (Expo) and Firebase that allows users to create and participate in surveys. The backend is powered by Firebase, and the frontend uses design patterns such as Container/Presente, HOC, and Render Props for better performance and scalability.
 
-.ENV !!!!
+## Features
+User authentication and authorization using Firebase Authentication.
+CRUD operation witrh Firebase
+UI using React Native Paper.
+State management using Redux.
 
+### Installation
+To install and run the application locally, follow these steps:
 
+Clone the repository to your local machine.
+Navigate to the project directory and run 
 
-מה היה לנו
-כל מיני חבילות
-רידוקס
-נייטיב פייפר
+```npm install```
 
-כל משתמש יכול לכתוב ב DB
-אבל רק אדמין יכול להוסיף שאלות
-ולראות את התוצאות
+to install the dependencies.
+Create a new *Firebase* project and configure it with the application. Refer to the Firebase documentation for more information.
+Edit the .env file - update the values with your Firebase configuration.
+Run 
 
-דיזיין פטרנס - קונטיינר וזה
+```expo start```
 
-Sure, I can help you implement some React design patterns in your React Native Expo app. Here are some common React design patterns that you can use:
-1.
-Container/Presenter Pattern: This pattern separates the logic and presentation of a component into two separate components. The Container component handles the logic and data fetching, while the Presenter component handles the presentation of the data. This pattern helps to keep the components clean and easy to test.
-2.
-Higher Order Components (HOC): HOCs are functions that take a component and return a new component with additional functionality. HOCs are useful for adding common functionality such as authentication, data fetching, or styling to multiple components.
-3.
-Render Props: This pattern involves passing a function as a prop to a component, which then uses that function to render its contents. This pattern is useful for sharing code between components and for creating reusable components.
-4.
-Context API: The Context API is a way to share data between components without passing props down through the component tree. This pattern is useful for sharing global data such as user settings or theme data.
-5.
-Redux: Redux is a state management library that provides a global store for your application state. It is useful for managing complex state and for sharing data between components.
+to start the application.
+The application should now be running in your web browser or mobile device using the Expo client app.
 
+Note: You may need to install the Expo CLI globally on your machine before you can use expo start. You can install it by running npm install -g expo-cli.
 
-diffrent approach - update in batch
+## Live:
+https://marvelous-kringle-0a5e24.netlify.app/
+![image](https://user-images.githubusercontent.com/99732661/236703211-eb861d63-c040-45b5-bb61-fe40903b8ba8.png)
 
-import { batch, updateDoc, doc, collection } from "firebase/firestore";
-import { db } from "../app/firebase";
-
-export const updateCollection = async (newData) => {
-  const questionsRef = collection(db, "questions");
-  const querySnapshot = await getDocs(questionsRef);
-
-  const batchUpdate = batch(db);
-
-  querySnapshot.forEach((doc) => {
-    const questionRef = doc(db, "questions", doc.id);
-    const newRating = newData[doc.id];
-    batchUpdate.update(questionRef, { [newRating]: increment(1) });
-  });
-
-  await batchUpdate.commit();
-};
