@@ -19,6 +19,10 @@ const Main = () => {
   const user = useSelector(selectUser);
   const isLoading = useSelector(selectIsLoading);
 
+  const defaultOptions = {
+    headerShown: false,
+  }
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -35,13 +39,13 @@ const Main = () => {
     <NavigationContainer>
       <Stack.Navigator>
         {user.uid ? (
-          <Stack.Screen name="Admin" component={Admin} options={{ headerShown: false }} />
+          <Stack.Screen name="Admin" component={Admin} options={ defaultOptions } />
         ) : (
           <>
-            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-            <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
-            <Stack.Screen name="Survey" component={Survey} options={{ headerShown: false }} />
-            <Stack.Screen name="ThankYou" component={ThankYou} options={{ headerShown: false }} />
+            <Stack.Screen name="Home" component={Home} options={ defaultOptions } />
+            <Stack.Screen name="Login" component={Login} options={ defaultOptions } />
+            <Stack.Screen name="Survey" component={Survey} options={ defaultOptions } />
+            <Stack.Screen name="ThankYou" component={ThankYou} options={ defaultOptions } />
           </>
         )}
       </Stack.Navigator>

@@ -10,8 +10,6 @@ import {
   appId
 } from "@env"
 
-
-
 const firebaseConfig = {
   apiKey: apiKey,
   authDomain: authDomain,
@@ -23,6 +21,5 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-
 export const auth = getAuth(app);
 export const fbSignOut = async () => await signOut(auth);

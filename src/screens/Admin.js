@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   SafeAreaView,
-  ScrollView,
   StatusBar,
   StyleSheet,
+  FlatList,
   View,
   Text,
 } from "react-native";
@@ -22,22 +22,32 @@ const Admin = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [newQuestion, setNewQuestion] = useState("");
 
+  useEffect(() => {
+    dispatch(getQuestions());
+  }, []);
+
   const handleLogout = () => {
     dispatch(setLoading(true));
     fbSignOut();
   };
+
   const handleAddQuestion = () => {
     dispatch(addQuestion(newQuestion)).then(() => {
-      setModalVisible(false)
-      setNewQuestion("")
+      setModalVisible(false);
+      setNewQuestion("");
     });
   };
+
   const handleRefresh = () => {
-    dispatch(getQuestions())
-  }
+    dispatch(getQuestions());
+  };
+
+  const renderItem = ({ item }) => (
+    <CustomListAccordion item={item} />
+  );
+
   return (
     <SafeAreaView style={styles.container}>
-
       <Modal
         transparent={false}
         visible={modalVisible}
@@ -65,25 +75,20 @@ const Admin = () => {
             <Button mode="contained" onPress={handleAddQuestion}>
               Add
             </Button>
-            <Button
-              mode="outlined"
-              onPress={() => {
-                setModalVisible(false);
-              }}
-            >
+            <Button mode="outlined" onPress={() => setModalVisible(false)}>
               Cancel
             </Button>
           </View>
         </Surface>
-        
       </Modal>
-      <ScrollView style={{ flex: 1 }}>
-        <List.Section title="Survey Questions">
-          {questions.map((item) => (
-            <CustomListAccordion item={item} key={item.id} />
-          ))}
-        </List.Section>
-      </ScrollView>
+      <FlatList
+        data={questions}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        ListHeaderComponent={
+          <Text style={styles.sectionTitle}>Survey Questions</Text>
+        }
+      />
       <View style={styles.footer}>
         <Button
           icon={"plus"}
@@ -92,7 +97,11 @@ const Admin = () => {
         >
           Add New
         </Button>
-        <Button icon={"refresh"} mode="outlined" onPress={handleRefresh}>
+        <Button
+          icon={"refresh"}
+          mode="outlined"
+          onPress={handleRefresh}
+        >
           Refresh
         </Button>
         <Button icon={"logout"} mode="outlined" onPress={handleLogout}>
@@ -103,20 +112,16 @@ const Admin = () => {
   );
 };
 
-export default Admin;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
   },
-  item: {
-    padding: 20,
-    marginVertical: 8,
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginVertical: 16,
     marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
   },
   footer: {
     display: "flex",
@@ -128,36 +133,19 @@ const styles = StyleSheet.create({
     borderTopColor: "#000",
     borderTopWidth: 1,
   },
-  centeredView: {
-    flex: 1,
+  surface: {
+    padding: 12,
+    height: 280,
+    backgroundColor: "#fff",
     alignItems: "center",
-    marginTop: 22,
-  },
-  modalView: {
-    width: "90%",
-    margin: 10,
-    borderRadius: 20,
-    padding: 20,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOpacity: 0.25,
-    elevation: 5,
+    justifyContent: "center",
   },
   modalText: {
     marginBottom: 15,
     textAlign: "center",
-  },
-  input: {
-    marginBottom: 25,
-  },
-  surface: {
-    padding: 12,
-    height: 280,
-    backgroundColor: "#fff", // width: 80,
-    margin: 10,
-    marginTop: 30,
-    // flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
+
+export default Admin;
