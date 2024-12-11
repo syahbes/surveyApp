@@ -27,7 +27,3 @@ The application should now be running in your web browser or mobile device using
 
 Note: You may need to install the Expo CLI globally on your machine before you can use expo start. You can install it by running npm install -g expo-cli.
 
-## Live:
-https://marvelous-kringle-0a5e24.netlify.app/
-![image](https://user-images.githubusercontent.com/99732661/236703211-eb861d63-c040-45b5-bb61-fe40903b8ba8.png)
-
